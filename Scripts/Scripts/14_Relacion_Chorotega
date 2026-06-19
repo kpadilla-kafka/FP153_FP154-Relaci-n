@@ -1,0 +1,188 @@
+/* =========================================================
+   RELACIÓN COMPLETA FP153 ↔ FP154
+   REGIÓN: CHOROTEGA
+   TRÁMITE: 20
+   FECHA: 2026-06-19
+
+   Usuarios incluidos:
+   - ID 41: Marcela Melissa Diaz Araya
+   - ID 42: Freddy Miranda Ordoñez
+   - ID 43: Juan Pablo Caravaca Martinez
+
+   Alcance:
+   - 12 Áreas Rectoras de Salud.
+   - 3 roles por ARS.
+   - 36 tareas por usuario.
+   - 108 tareas totales para la Región Chorotega.
+
+   Resultado esperado:
+   Visualización de 36 ramas asociadas por usuario en FP153.
+   ========================================================= */
+
+USE [AuraPortal_BPMS_DES];
+GO
+
+SET XACT_ABORT ON;
+
+BEGIN TRY
+    BEGIN TRAN;
+
+    DECLARE @IdUsuario153 INT = 41; -- Marcela Melissa Diaz Araya
+    -- Para Freddy:     DECLARE @IdUsuario153 INT = 42; -- Freddy Miranda Ordoñez
+    -- Para Juan Pablo: DECLARE @IdUsuario153 INT = 43; -- Juan Pablo Caravaca Martinez
+
+    DECLARE @NuevasRamas TABLE (IdRama154 INT);
+
+    DECLARE @RamasChorotega TABLE (
+        Rama NVARCHAR(50),
+        UnidadOrganizativa NVARCHAR(250),
+        Cargo NVARCHAR(100)
+    );
+
+    INSERT INTO @RamasChorotega VALUES
+    ('7.6.9.1.1.','Región Chorotega - ARS Abangares','Funcionario revisor PSF'),
+    ('7.6.9.1.2.','Región Chorotega - ARS Abangares','Funcionario firmante PSF'),
+    ('7.6.9.1.3.','Región Chorotega - ARS Abangares','Funcionario reportería PSF'),
+
+    ('7.6.9.2.1.','Región Chorotega - ARS Bagaces','Funcionario revisor PSF'),
+    ('7.6.9.2.2.','Región Chorotega - ARS Bagaces','Funcionario firmante PSF'),
+    ('7.6.9.2.3.','Región Chorotega - ARS Bagaces','Funcionario reportería PSF'),
+
+    ('7.6.9.3.1.','Región Chorotega - ARS Cañas','Funcionario revisor PSF'),
+    ('7.6.9.3.2.','Región Chorotega - ARS Cañas','Funcionario firmante PSF'),
+    ('7.6.9.3.3.','Región Chorotega - ARS Cañas','Funcionario reportería PSF'),
+
+    ('7.6.9.4.1.','Región Chorotega - ARS Carrillo','Funcionario revisor PSF'),
+    ('7.6.9.4.2.','Región Chorotega - ARS Carrillo','Funcionario firmante PSF'),
+    ('7.6.9.4.3.','Región Chorotega - ARS Carrillo','Funcionario reportería PSF'),
+
+    ('7.6.9.5.1.','Región Chorotega - ARS Hojancha','Funcionario revisor PSF'),
+    ('7.6.9.5.2.','Región Chorotega - ARS Hojancha','Funcionario firmante PSF'),
+    ('7.6.9.5.3.','Región Chorotega - ARS Hojancha','Funcionario reportería PSF'),
+
+    ('7.6.9.6.1.','Región Chorotega - ARS La Cruz','Funcionario revisor PSF'),
+    ('7.6.9.6.2.','Región Chorotega - ARS La Cruz','Funcionario firmante PSF'),
+    ('7.6.9.6.3.','Región Chorotega - ARS La Cruz','Funcionario reportería PSF'),
+
+    ('7.6.9.7.1.','Región Chorotega - ARS Liberia','Funcionario revisor PSF'),
+    ('7.6.9.7.2.','Región Chorotega - ARS Liberia','Funcionario firmante PSF'),
+    ('7.6.9.7.3.','Región Chorotega - ARS Liberia','Funcionario reportería PSF'),
+
+    ('7.6.9.8.1.','Región Chorotega - ARS Nandayure','Funcionario revisor PSF'),
+    ('7.6.9.8.2.','Región Chorotega - ARS Nandayure','Funcionario firmante PSF'),
+    ('7.6.9.8.3.','Región Chorotega - ARS Nandayure','Funcionario reportería PSF'),
+
+    ('7.6.9.9.1.','Región Chorotega - ARS Nicoya','Funcionario revisor PSF'),
+    ('7.6.9.9.2.','Región Chorotega - ARS Nicoya','Funcionario firmante PSF'),
+    ('7.6.9.9.3.','Región Chorotega - ARS Nicoya','Funcionario reportería PSF'),
+
+    ('7.6.9.10.1.','Región Chorotega - ARS Santa Cruz','Funcionario revisor PSF'),
+    ('7.6.9.10.2.','Región Chorotega - ARS Santa Cruz','Funcionario firmante PSF'),
+    ('7.6.9.10.3.','Región Chorotega - ARS Santa Cruz','Funcionario reportería PSF'),
+
+    ('7.6.9.11.1.','Región Chorotega - ARS Tilarán','Funcionario revisor PSF'),
+    ('7.6.9.11.2.','Región Chorotega - ARS Tilarán','Funcionario firmante PSF'),
+    ('7.6.9.11.3.','Región Chorotega - ARS Tilarán','Funcionario reportería PSF'),
+
+    ('7.6.9.12.1.','Región Chorotega - ARS Upala','Funcionario revisor PSF'),
+    ('7.6.9.12.2.','Región Chorotega - ARS Upala','Funcionario firmante PSF'),
+    ('7.6.9.12.3.','Región Chorotega - ARS Upala','Funcionario reportería PSF');
+
+    IF (SELECT COUNT(*) FROM @RamasChorotega) <> 36
+        THROW 50001, 'La cantidad de ramas Chorotega no es 36.', 1;
+
+    INSERT INTO dbo.AP_Dyn_Familias_154
+    (
+        [_ElementID], [Creado], [IdCreador], [TipoCreador],
+        [Modificado], [IdModificador], [TipoModificador],
+        [_FamilyClass], [_Name], [_SecureRoomID],
+        [3_Institución a la que pertenece],
+        [3_Nombre de cargo],
+        [3_Nombre institución login],
+        [2_Página a asignar/IdPágina],
+        [3_IdPortal],
+        [1_Página a asignar],
+        [1_Página a asignar/Name],
+        [2_Página a asignar/IdPortal],
+        [3_Instituciones en la VUI],
+        [3_Acrónimo],
+        [1_VUI - Procesos],
+        [1_VUI - Procesos/Name],
+        [2_VUI - Procesos/_Nm-VUI - Listado de procesos en producción],
+        [2_VUI - Procesos/Nombre de proceso]
+    )
+    OUTPUT INSERTED.ID INTO @NuevasRamas
+    SELECT
+        0, GETDATE(), 35, 0,
+        GETDATE(), 35, 0,
+        157, r.Rama, 0,
+        r.UnidadOrganizativa,
+        r.Cargo,
+        NULL,
+        378,
+        94,
+        1,
+        'Página genérica de empleados VUI',
+        94,
+        12386,
+        'MINSA',
+        3,
+        20,
+        20,
+        'MINSA - Permiso Sanitario de Funcionamiento'
+    FROM @RamasChorotega r;
+
+    IF (SELECT COUNT(*) FROM @NuevasRamas) <> 36
+        THROW 50002, 'No se crearon 36 tareas FP154 para el usuario.', 1;
+
+    INSERT INTO dbo.AP__FamilyRelational_Data
+    (
+        CreatorId, Created, CreatorType,
+        ModifierId, Modified, ModifierType,
+        RelationId, ElementFamily1Id, ElementFamily2Id
+    )
+    SELECT
+        35, GETDATE(), 0,
+        35, GETDATE(), 0,
+        25,
+        @IdUsuario153,
+        nr.IdRama154
+    FROM @NuevasRamas nr;
+
+    IF (
+        SELECT COUNT(*)
+        FROM dbo.AP__FamilyRelational_Data rel
+        INNER JOIN @NuevasRamas nr
+            ON nr.IdRama154 = rel.ElementFamily2Id
+        WHERE rel.RelationId = 25
+          AND rel.ElementFamily1Id = @IdUsuario153
+    ) <> 36
+        THROW 50003, 'No se crearon 36 relaciones para el usuario.', 1;
+
+    SELECT
+        f153.[1_Super usuario institucion/Name] AS Usuario,
+        f154.ID AS IdRama154,
+        f154.[_Name] AS Rama,
+        f154.[3_Institución a la que pertenece] AS UnidadOrganizativa,
+        f154.[3_Nombre de cargo] AS Cargo
+    FROM dbo.AP__FamilyRelational_Data rel
+    INNER JOIN dbo.AP_Dyn_Familias_153 f153
+        ON f153.ID = rel.ElementFamily1Id
+    INNER JOIN dbo.AP_Dyn_Familias_154 f154
+        ON f154.ID = rel.ElementFamily2Id
+    WHERE rel.RelationId = 25
+      AND rel.ElementFamily1Id = @IdUsuario153
+      AND f154.[1_VUI - Procesos/Name] = 20
+      AND f154.[3_Institución a la que pertenece] LIKE 'Región Chorotega%'
+    ORDER BY f154.[_Name], f154.ID;
+
+    COMMIT;
+END TRY
+BEGIN CATCH
+    IF @@TRANCOUNT > 0
+        ROLLBACK;
+
+    SELECT
+        ERROR_NUMBER() AS ErrorNumber,
+        ERROR_MESSAGE() AS ErrorMessage;
+END CATCH;
