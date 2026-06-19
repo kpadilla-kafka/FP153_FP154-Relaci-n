@@ -1,0 +1,64 @@
+SELECT
+    ID,
+    [1_Super usuario institucion/Name] AS Usuario
+FROM dbo.AP_Dyn_Familias_153
+ORDER BY ID;
+
+/*Mapeo:
+
+Rosibel  = 8
+Ronny    = 9
+Michael  = 10
+
+Ana      = 11
+Mariela  = 12
+Nuria    = 13
+
+Dayana   = 14
+Hugo     = 15
+Wilder   = 16
+
+Bibiana  = 17
+Danny    = 18
+
+Leidy    = 19
+Carlos   = 20
+
+Roger    = 21
+Jenory   = 22
+José M.  = 23
+
+Alfredo  = 24
+Rolando  = 25
+Dayanna  = 33
+Marcela  = 34
+Freddy   = 35
+Juan P.  = 36*/
+
+------------------------------------
+
+SELECT
+    ID,
+    [_Name] AS Rama,
+    [3_Institución a la que pertenece] AS UnidadOrganizativa,
+    [3_Nombre de cargo] AS Cargo
+FROM dbo.AP_Dyn_Familias_154
+WHERE [1_VUI - Procesos/Name] = 20
+ORDER BY [_Name];
+
+---------------------------
+
+SELECT
+    rel.ElementFamily1Id,
+    f153.[1_Super usuario institucion/Name] AS Usuario,
+    COUNT(*) AS TotalRelaciones
+FROM dbo.AP__FamilyRelational_Data rel
+INNER JOIN dbo.AP_Dyn_Familias_153 f153
+    ON f153.ID = rel.ElementFamily1Id
+WHERE rel.RelationId = 25
+GROUP BY
+    rel.ElementFamily1Id,
+    f153.[1_Super usuario institucion/Name]
+ORDER BY Usuario;
+
+---------------------
