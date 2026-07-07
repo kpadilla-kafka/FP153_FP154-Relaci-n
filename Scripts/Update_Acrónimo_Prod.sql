@@ -1,3 +1,5 @@
+--Script Date: 07/07/2026
+
 USE [AuraPortal_BPMS_PROD];
 GO
 
