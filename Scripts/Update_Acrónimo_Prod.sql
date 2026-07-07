@@ -1,4 +1,26 @@
---Script Date: 07/07/2026
+/*
+===============================================================
+ACTUALIZACIÓN DE ACRÓNIMO - FP154
+AMBIENTE: PRODUCCIÓN
+FECHA: 2026-07-07
+
+Objetivo:
+Actualizar el campo [3_Acrónimo] de las tareas de la
+Familia Propia 154 correspondientes al Trámite 20,
+cambiando el valor 'MINSA' por 'misalud'.
+
+Alcance:
+- Familia Propia 154.
+- Trámite 20.
+- Registros afectados: 638.
+
+El procedimiento incluye:
+- Validación previa.
+- Respaldo de los registros afectados.
+- Actualización del campo.
+- Validación posterior.
+===============================================================
+*/
 
 --Validar:
 
