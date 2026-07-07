@@ -1,5 +1,14 @@
 --Script Date: 07/07/2026
 
+--Validar:
+
+    SELECT COUNT(*) AS TotalAActualizar
+FROM dbo.AP_Dyn_Familias_154
+WHERE [1_VUI - Procesos/Name] = 20
+  AND [3_Acrónimo] = 'MINSA';
+
+-----------------------------------------------------------
+
 USE [AuraPortal_BPMS_PROD];
 GO
 
